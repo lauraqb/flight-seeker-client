@@ -1,0 +1,74 @@
+@import '~bpk-mixins';
+$blue : #00b2d6;
+$gray: rgb(139, 138, 138);
+
+.App {
+  // &__main {
+  //   //padding: $bpk-spacing-sm;
+  // }
+  &__header {
+    background-color: $blue;
+    color: white;
+    padding: $bpk-spacing-sm;
+  }
+  &__bar {
+    display: flex;
+    margin: 10px;
+  }
+  &__barSortOption {
+    margin-left: 30px;
+    flex: 1;
+  }
+  &__content {
+    padding: $bpk-spacing-sm;
+    background-color: #e6e4eb;
+    min-height: calc(100vh - 155px);
+  }
+  &__loader{
+    display: flex;
+    justify-content: center;
+  }
+
+}
+
+.Card {
+  &__main {
+    margin-bottom: 15px;
+  }
+  &__row {
+    display: flex;
+    align-items: baseline;
+  }
+  &__item {
+    display: inline-block;
+    padding: 0 3px;
+  }
+  &__item-2 {
+    flex: 1;
+  }
+  &__icon {
+    border-radius: 2px;
+  }
+  &__city {
+    font-size: 15px;
+    font-weight: 500;
+    color: $gray;
+  }
+  &__duration {
+    //float: right;
+    font-size: 13px;
+  }
+  &__stops {
+    color: #00d775;
+  }
+  &__priceRow {
+    display: flex;
+    align-items: baseline;
+    padding-top: 10px;
+  }
+  &__price {
+    flex: auto;
+    font-size: 28px;
+    color: black;
+  }
+}

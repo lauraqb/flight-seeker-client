@@ -1,0 +1,43 @@
+{
+  "private": true,
+  "name": "client",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "lint:scss": "stylelint 'src/**/*.scss' --syntax scss",
+    "lint:scss:fix": "stylefmt --recursive 'src/**/*.scss'",
+    "lint:js": "eslint . --ignore-path ./../.gitignore --ext .js,.jsx",
+    "lint:js:fix": "npm run lint:js -- --fix",
+    "lint": "npm run lint:js && npm run lint:scss"
+  },
+  "devDependencies": {
+    "backpack-react-scripts": "^7.0.0",
+    "bpk-component-button": "^2.1.57",
+    "bpk-component-card": "^1.1.70",
+    "bpk-component-icon": "^3.27.10",
+    "bpk-component-link": "^1.2.56",
+    "bpk-component-text": "^1.0.54",
+    "bpk-mixins": "^17.6.1",
+    "bpk-stylesheets": "^3.2.100",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-loading": "^2.0.3",
+    "react-test-renderer": "^16.3.1"
+  },
+  "proxy": "http://localhost:4000",
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "bpk-tokens": "^27.5.0",
+    "create-react-class": "^15.6.3",
+    "react-bootstrap": "^1.0.0-beta.9",
+    "react-bootstrap-date-picker": "^5.1.0"
+  }
+}
