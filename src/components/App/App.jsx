@@ -12,7 +12,7 @@ import SearcherForm from './../Searcher'
 import FlightCard from './FlightCard'
 import Loader from './Loader'
 console.log(location.hostname)
-const API_URI= location.hostname === "localhost" ? "http://localhost:4000" : "https://flight-seeker-server.herokuapp.com/";
+const API_URI= location.hostname === "localhost" ? "http://localhost:4000" : "https://flight-seeker-server.herokuapp.com";
 const c = className => STYLES[className] || 'UNKNOWN';
 const AlignedArrow = withAlignment( BpkArrowIcon, lineHeightXl, iconSizeSm );
 
