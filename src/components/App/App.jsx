@@ -11,7 +11,8 @@ import Header from './../Header';
 import SearcherForm from './../Searcher'
 import FlightCard from './FlightCard'
 import Loader from './Loader'
-
+console.log(location.hostname)
+const API_URI= location.hostname === "localhost" ? "http://localhost:4000" : "https://flight-seeker-server.herokuapp.com/";
 const c = className => STYLES[className] || 'UNKNOWN';
 const AlignedArrow = withAlignment( BpkArrowIcon, lineHeightXl, iconSizeSm );
 
@@ -37,7 +38,7 @@ const App = () => {
     const tuesday = getDayDate(2);
     console.log('fetching results from server... From ' + data.origin + " to "+data.destination);
     setData("loading");
-    fetch('http://localhost:4000/api/search?originplace='+data.origin+'&destinationplace='+data.destination+'&outbounddate='+monday+'&inbounddate='+tuesday)
+    fetch(API_URI+'/api/search?originplace='+data.origin+'&destinationplace='+data.destination+'&outbounddate='+monday+'&inbounddate='+tuesday)
       .then(response => response.json())
       .then((results) => {
         setData(results);
