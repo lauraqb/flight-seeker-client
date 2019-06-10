@@ -17,58 +17,46 @@ const c = className => STYLES[className] || 'UNKNOWN';
 const AlignedArrow = withAlignment( BpkArrowIcon, lineHeightXl, iconSizeSm );
 
 
-
 const App = () => {
+  const [results, setResults] = React.useState([]);
   const [data, setData] = React.useState([]);
-  
-  /** Given a day of the week (dayOfTheWeek), returns the date of the next ocurring dayOfTheWeek */
-  const getDayDate = (day) => {
-    let d = new Date();
-    d.setDate(d.getDate() + (day + 7 - d.getDay()) % 7);
-    const dd = String(d.getDate()).padStart(2, '0');
-    const mm = String(d.getMonth() + 1).padStart(2, '0');
-    const yyyy = d.getFullYear();
-    d = yyyy + '-' + mm + '-' + dd; 
-    return d;
-  }
 
-  const fetchFlights = async (data) => {
-    //departing next Monday and returning the following day
-    const monday = getDayDate(1);
-    const tuesday = getDayDate(2);
-    console.log('fetching results from server... From ' + data.origin + " to "+data.destination);
-    setData("loading");
-    fetch(API_URI+'/api/search?originplace='+data.origin+'&destinationplace='+data.destination+'&outbounddate='+monday+'&inbounddate='+tuesday)
+  const fetchFlights = async (obj) => {
+    console.log('fetching results from server... From ' + obj.origin + " to "+obj.destination);
+    setData(obj);
+    setResults("loading");
+    fetch(API_URI+'/api/search?originplace='+obj.origin+'&destinationplace='+obj.destination+'&outbounddate='+obj.outbounddate+'&inbounddate='+obj.inbounddate)
       .then(response => response.json())
       .then((results) => {
-        setData(results);
+        setResults(results);
       })
       .catch(() => {
-        setData("error");
+        setResults("error");
         console.error;
       });
   }
 
-  //if(data.length == 0)  fetchFlights();
-  //onSubmit={this.fetchFlights}
   return (
-    <div className={c('App')}>
+    <div className='App'>
       <Header />
       <SearcherForm parentCallback = {fetchFlights}/> 
       <main className={c('App__main')}>
         <div className={c('App__header')}>
           <div className={c('App__cities')}>
-          <BpkText textStyle="xl">EDI <AlignedArrow fill={"white"} /> LONDON</BpkText></div>
-          <div className={c('App__travellers')}>2 travellers, economy</div>
+            {data.length != 0 ?
+          (<BpkText textStyle="xl">{data.origin} <AlignedArrow fill={"white"} />{data.destination}</BpkText>) : ""
+        }
+        </div> 
+          <div className={c('App__travellers')}>1 traveller, economy</div>
         </div>
         <div className={c('App__bar')}>
           <BpkLink href="#">Filter</BpkLink>
           <BpkLink className={c('App__barSortOption')} href="">Sort</BpkLink>
-          <BpkLink href="#"><BpkAlertIcon fill={"#00b2d6"}/>Price alerts</BpkLink>
+          {/* <BpkLink href="#"><BpkAlertIcon fill={"#00b2d6"}/>Price alerts</BpkLink> */}
         </div>
         <div className={c('App__content')}>
-          {data == "loading" ? (<Loader />) : data=="error" ? (<div>Problem getting data</div>) : 
-            data.map((item, i) => (
+          {results == "loading" ? (<Loader />) : results=="error" ? (<div>Problem getting data</div>) : 
+            results.map((item, i) => (
               <FlightCard flight={item} key={i}/>
             ))
           }
