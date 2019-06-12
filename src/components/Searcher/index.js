@@ -56,7 +56,7 @@ class SearcherForm extends React.Component {
                     <Col>
                         <Form.Group controlId="exampleForm.ControlSelect1">
                             <Form.Label className={c('searcher-label')}>From</Form.Label>
-                            <Form.Control as="select" onChange={this.handleChange}>
+                            <Form.Control name="origin" as="select" onChange={this.handleChange} value={this.state.origin}>
                                 <option value="EDI">Edinburgh (EDI)</option>
                                 <option value="BCN">Barcelona (BCN)</option>
                             </Form.Control>
@@ -66,7 +66,7 @@ class SearcherForm extends React.Component {
                     <Col>
                         <Form.Group controlId="exampleForm.ControlSelect1">
                             <Form.Label className={c('searcher-label')}>To</Form.Label>
-                            <Form.Control as="select" onChange={this.handleChange}>
+                            <Form.Control name="destination" as="select" onChange={this.handleChange} value={this.state.destination}>
                                 <option value="EDI">Edinburgh (EDI)</option>
                                 <option value="BCN">Barcelona (BCN)</option>
                                 <option value="LHR">London (LHR)</option>
