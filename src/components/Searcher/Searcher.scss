@@ -1,8 +1,14 @@
 $blue : #00b2d6;
 .searcher-container {
-    padding: 20px;
+    padding: 10px;
 }
 
 .searcher-button {
     background-color: $blue !important;
-  }
+}
+
+.searcher-label {
+    font-size: 10px;
+    font-weight: bold;
+    margin: 0;
+}

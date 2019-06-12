@@ -30,6 +30,7 @@ class SearcherForm extends React.Component {
     }
 
     handleChange(event) {
+        debugger;
         const name = event.target.name
         this.setState({[name]: event.target.value}) 
     }
@@ -53,16 +54,37 @@ class SearcherForm extends React.Component {
             <Form onSubmit={this.handleSubmit}>
                 <Row className="justify-content-md-center">
                     <Col>
-                        <Form.Control placeholder="From" type="text" name="origin" value={this.state.origin} onChange={this.handleChange} />
+                        <Form.Group controlId="exampleForm.ControlSelect1">
+                            <Form.Label className={c('searcher-label')}>From</Form.Label>
+                            <Form.Control as="select" onChange={this.handleChange}>
+                                <option value="EDI">Edinburgh (EDI)</option>
+                                <option value="BCN">Barcelona (BCN)</option>
+                            </Form.Control>
+                        </Form.Group>
+                        {/* <Form.Control placeholder="From" type="text" name="origin" value={this.state.origin} onChange={this.handleChange} /> */}
                     </Col>
                     <Col>
-                        <Form.Control placeholder="To" type="text" name="destination" value={this.state.destination} onChange={this.handleChange} />
+                        <Form.Group controlId="exampleForm.ControlSelect1">
+                            <Form.Label className={c('searcher-label')}>To</Form.Label>
+                            <Form.Control as="select" onChange={this.handleChange}>
+                                <option value="EDI">Edinburgh (EDI)</option>
+                                <option value="BCN">Barcelona (BCN)</option>
+                                <option value="LHR">London (LHR)</option>
+                            </Form.Control>
+                        </Form.Group>
+                        {/* <Form.Control placeholder="To" type="text" name="destination" value={this.state.destination} onChange={this.handleChange} /> */}
                     </Col>
                     <Col>
+                        <Form.Group controlId="exampleForm.ControlSelect1">
+                            <Form.Label className={c('searcher-label')}>Depart</Form.Label>
                         <Form.Control placeholder="yyyy/mm/dd" type="text" name="outbounddate" value={this.state.outbounddate} onChange={this.handleChange} />
+                        </Form.Group>
                     </Col>
                     <Col >
+                        <Form.Group controlId="exampleForm.ControlSelect1">
+                            <Form.Label className={c('searcher-label')}>Return</Form.Label>
                         <Form.Control placeholder="yyyy/mm/dd" type="text" name="inbounddate" value={this.state.inbounddate} onChange={this.handleChange} />
+                        </Form.Group>
                     </Col>
                     <Col>
                         <Button type="submit" value="Submit" className={c('searcher-button')}>Search Flights</Button>
