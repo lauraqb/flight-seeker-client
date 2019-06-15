@@ -29,12 +29,28 @@ class SearcherForm extends React.Component {
         return d;
     }
 
-    handleChange(event) {
-        debugger;
-        const name = event.target.name
-        this.setState({[name]: event.target.value}) 
-    }
+    // handleChange(event) {
+    //     debugger;
+    //     const name = event.target.name
+    //     this.setState({[name]: event.target.value}) 
+    // }
 
+    handleChange(event) {
+        const value = event.target.value
+        const request = "http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/UK/GBP/en-GB/?query="+value+"&apiKey=prtl6749387986743898559646983194"
+        fetch(request, {mode: 'no-cors'})
+        .then(response => response.json())
+        .then((data)=> {
+            data.Places.forEach(place => {
+                console.log(place.PlaceId)
+                console.log(place.PlaceName)
+            });
+        })
+        .catch(() => {
+            console.error;
+          });
+    }
+    
     handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.target);
@@ -61,7 +77,7 @@ class SearcherForm extends React.Component {
                                 <option value="BCN">Barcelona (BCN)</option>
                             </Form.Control>
                         </Form.Group>
-                        {/* <Form.Control placeholder="From" type="text" name="origin" value={this.state.origin} onChange={this.handleChange} /> */}
+                        <Form.Control placeholder="From" type="text" name="origin" value={this.state.origin} onChange={this.handleChange} />
                     </Col>
                     <Col>
                         <Form.Group controlId="exampleForm.ControlSelect1">
