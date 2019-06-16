@@ -4,8 +4,10 @@ import Button from 'react-bootstrap/Button';
 import {Container, Row, Col} from 'react-bootstrap';
 import STYLES from './Searcher.scss';
 const c = className => STYLES[className] || 'UNKNOWN';
+const API_URI= location.hostname === "localhost" ? "http://localhost:4000" : "https://flight-seeker-server.herokuapp.com";
 
 class SearcherForm extends React.Component {
+
     constructor(props) {
         super(props)
         this.state = {
@@ -13,6 +15,7 @@ class SearcherForm extends React.Component {
             destination: 'LHR',
             outbounddate: this.getDate(1), //next monday
             inbounddate: this.getDate(2),  //tuesday
+            places: [{}]
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -29,26 +32,20 @@ class SearcherForm extends React.Component {
         return d;
     }
 
-    // handleChange(event) {
-    //     debugger;
-    //     const name = event.target.name
-    //     this.setState({[name]: event.target.value}) 
-    // }
-
     handleChange(event) {
         const value = event.target.value
-        const request = "http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/UK/GBP/en-GB/?query="+value+"&apiKey=prtl6749387986743898559646983194"
-        fetch(request, {mode: 'no-cors'})
+        const name = event.target.name
+        this.state[name] = value
+        fetch(API_URI+'/places?query='+value)
         .then(response => response.json())
-        .then((data)=> {
-            data.Places.forEach(place => {
-                console.log(place.PlaceId)
-                console.log(place.PlaceName)
-            });
+        .then((results) => {
+            const places=results
+            this.setState({ places })
         })
-        .catch(() => {
-            console.error;
-          });
+        .catch((error) => {
+            console.error(error)
+            throw error
+        });
     }
     
     handleSubmit = (event) => {
@@ -72,23 +69,26 @@ class SearcherForm extends React.Component {
                     <Col>
                         <Form.Group controlId="exampleForm.ControlSelect1">
                             <Form.Label className={c('searcher-label')}>From</Form.Label>
-                            <Form.Control name="origin" as="select" onChange={this.handleChange} value={this.state.origin}>
-                                <option value="EDI">Edinburgh (EDI)</option>
-                                <option value="BCN">Barcelona (BCN)</option>
-                            </Form.Control>
+                            <Form.Control type="text" name="origin" list="cityname" onChange={this.handleChange} />
+                            <datalist id="cityname">
+                                {this.state.places.map((item, i) => {
+                                    return ( <option value={item.placeId} key={i}>{item.placeName}</option> )
+                                })}
+                            </datalist>
                         </Form.Group>
-                        <Form.Control placeholder="From" type="text" name="origin" value={this.state.origin} onChange={this.handleChange} />
+                        
                     </Col>
                     <Col>
                         <Form.Group controlId="exampleForm.ControlSelect1">
                             <Form.Label className={c('searcher-label')}>To</Form.Label>
-                            <Form.Control name="destination" as="select" onChange={this.handleChange} value={this.state.destination}>
-                                <option value="EDI">Edinburgh (EDI)</option>
-                                <option value="BCN">Barcelona (BCN)</option>
-                                <option value="LHR">London (LHR)</option>
-                            </Form.Control>
+                            <Form.Control type="text" name="destination" list="cityname" onChange={this.handleChange} />
+                            <datalist id="cityname">
+                                {this.state.places.map((item, i) => {
+                                    return ( <option value={item.placeId} key={i}>{item.placeName}</option> )
+                                })}
+                            </datalist>
                         </Form.Group>
-                        {/* <Form.Control placeholder="To" type="text" name="destination" value={this.state.destination} onChange={this.handleChange} /> */}
+    
                     </Col>
                     <Col>
                         <Form.Group controlId="exampleForm.ControlSelect1">
@@ -99,10 +99,11 @@ class SearcherForm extends React.Component {
                     <Col >
                         <Form.Group controlId="exampleForm.ControlSelect1">
                             <Form.Label className={c('searcher-label')}>Return</Form.Label>
-                        <Form.Control placeholder="yyyy/mm/dd" type="text" name="inbounddate" value={this.state.inbounddate} onChange={this.handleChange} />
+                            <Form.Control placeholder="yyyy/mm/dd" type="text" name="inbounddate" value={this.state.inbounddate} onChange={this.handleChange} />
                         </Form.Group>
                     </Col>
                     <Col>
+                        <br/>
                         <Button type="submit" value="Submit" className={c('searcher-button')}>Search Flights</Button>
                     </Col>
                 </Row>
