@@ -22,6 +22,7 @@ const App = () => {
   const [data, setData] = React.useState([]);
 
   const fetchFlights = async (obj) => {
+    debugger;
     console.log('fetching results from server... From ' + obj.origin + " to "+obj.destination);
     setData(obj);
     setResults("loading");

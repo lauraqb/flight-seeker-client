@@ -25,6 +25,7 @@ const Header = () => (
     <a href="/">
       <span className={c('Header__hidden-text')}>Laura Tristán</span>
       <img className={c('Header__logo-image')} alt="" src={logo} />
+      <span className={c('Header__title')}>Search Flights</span>
     </a>
     {/* TODO burger menu icon */}
   </header>

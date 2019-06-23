@@ -23,6 +23,7 @@ $gray: rgb(139, 138, 138);
   &__content {
     padding: $bpk-spacing-sm;
     background-color: #e6e4eb;
+    background-image: url("./mapa-mundi.png");
     min-height: calc(100vh - 155px);
   }
   &__loader{
